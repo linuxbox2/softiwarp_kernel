@@ -398,7 +398,32 @@ struct ib_qp *siw_create_qp(struct ib_pd *ofa_pd,
 	    (attrs->cap.max_recv_wr > SIW_MAX_QP_WR) ||
 	    (attrs->cap.max_send_sge > SIW_MAX_SGE)  ||
 	    (attrs->cap.max_recv_sge > SIW_MAX_SGE)) {
-		dprint(DBG_ON, ": QP Size!\n");
+#if DPRINT_MASK >= DBG_ON
+		if (attrs->cap.max_send_wr > SIW_MAX_QP_WR) {
+			dprint(DBG_ON,
+			       "%s max_send_wr %d > SIW_MAX_QP_WR\n",
+			       __func__, attrs->cap.max_send_wr);
+		}
+		if (attrs->cap.max_recv_wr > SIW_MAX_QP_WR) {
+			dprint(DBG_ON,
+			       "%s max_recv_wr %d > SIW_MAX_QP_WR\n",
+			       __func__, attrs->cap.max_recv_wr);
+		}
+		if (attrs->cap.max_send_sge > SIW_MAX_SGE) {
+			dprint(DBG_ON,
+			       "%s max_send_sge %d > SIW_MAX_SGE (%d)\n",
+			       __func__,
+			       attrs->cap.max_send_sge,
+			       SIW_MAX_SGE);
+		}
+		if (attrs->cap.max_recv_sge > SIW_MAX_SGE) {
+			dprint(DBG_ON,
+			       "%s max_recv_sge %d > SIW_MAX_SGE (%d)\n",
+			       __func__,
+			       attrs->cap.max_recv_sge,
+			       SIW_MAX_SGE);
+		}
+#endif
 		rv = -EINVAL;
 		goto err_out;
 	}
