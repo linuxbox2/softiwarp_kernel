@@ -1287,6 +1287,8 @@ int siw_connect(struct iw_cm_id *id, struct iw_cm_conn_param *params)
 	u16		pd_len = params->private_data_len;
 	int		rv;
 
+	dprint(DBG_CM, " enter\n");
+
 	if (pd_len > MPA_MAX_PRIVDATA)
 		return -EINVAL;
 
@@ -1450,6 +1452,8 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
 	struct siw_qp		*qp;
 	struct siw_qp_attrs	qp_attrs;
 	int rv;
+
+	dprint(DBG_CM, " enter\n");
 
 	siw_cep_set_inuse(cep);
 	siw_cep_put(cep);
